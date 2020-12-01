@@ -43,3 +43,14 @@ Video Game Graphics course for Estonian Entrepreneurship University of Applied S
 4. Install VSCode "Live Server" extension. Click "Go Live" button in VSCode bottom bar to start a local web server
 
 5. Open link in Chrome http://localhost:5500
+
+## Commit Home Assignment
+
+1. Open GitHub Desktop
+2. Verify changed files
+3. Write a meaningful description message
+4. You will be offered to fork repository (first time only), agree and create a fork
+5. Commit to main branch of the fork
+6. Push changes to GitHub server
+7. i made some changes
+ 
