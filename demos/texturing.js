@@ -33,7 +33,8 @@ let fragmentShader = `
     #version 300 es
     precision highp float;
     
-    uniform sampler2D tex;    
+    uniform sampler2D tex;
+    uniform float time;    
     
     in vec2 v_uv;
     
@@ -188,6 +189,7 @@ async function loadTexture(fileName) {
         skyboxDrawCall.draw();
 
         app.enable(PicoGL.DEPTH_TEST);
+        drawCall.uniform("time", time);
         drawCall.uniform("modelViewProjectionMatrix", modelViewProjectionMatrix);
         drawCall.draw();
 
