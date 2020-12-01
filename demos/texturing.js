@@ -13,7 +13,7 @@
 import PicoGL from "../node_modules/picogl/build/module/picogl.js";
 import {mat4, vec3} from "../node_modules/gl-matrix/esm/index.js";
 
-import {positions, normals, uvs, indices} from "../blender/cube.js"
+import {positions, normals, uvs, indices} from "../blender/sphere.js"
 
 const skyboxPositions = new Float32Array([
     -1.0, 1.0, 1.0,
@@ -125,24 +125,36 @@ async function loadTexture(fileName) {
 }
 
 (async () => {
-    const tex = await loadTexture("abstract.jpg");
+    //const tex = await loadTexture("abstract.jpg");
+    const tex = await loadTexture("digimon-iphone-wallpaper.jpg");
     let drawCall = app.createDrawCall(program, vertexArray)
         .texture("tex", app.createTexture2D(tex, tex.width, tex.height, {
             magFilter: PicoGL.LINEAR,
             minFilter: PicoGL.LINEAR_MIPMAP_LINEAR,
             maxAnisotropy: 10,
-            wrapS: PicoGL.REPEAT,
-            wrapT: PicoGL.REPEAT
+            //wrapS: PicoGL.REPEAT,
+            //wrapT: PicoGL.REPEAT
+            wrapS: PicoGL.MIRRORED_REPEAT,
+            wrapT: PicoGL.MIRRORED_REPEAT
+
+
+            
         }));
 
     let skyboxDrawCall = app.createDrawCall(skyboxProgram, skyboxArray)
         .texture("cubemap", app.createCubemap({
-            negX: await loadTexture("stormydays_bk.png"),
-            posX: await loadTexture("stormydays_ft.png"),
-            negY: await loadTexture("stormydays_dn.png"),
-            posY: await loadTexture("stormydays_up.png"),
-            negZ: await loadTexture("stormydays_lf.png"),
-            posZ: await loadTexture("stormydays_rt.png")
+            //negX: await loadTexture("stormydays_bk.png"),
+            //posX: await loadTexture("stormydays_ft.png"),
+            //negY: await loadTexture("stormydays_dn.png"),
+            //posY: await loadTexture("stormydays_up.png"),
+            //negZ: await loadTexture("stormydays_lf.png"),
+            //posZ: await loadTexture("stormydays_rt.png")
+            negX: await loadTexture("last-evolution.jpg"),
+            posX: await loadTexture("Digimon-x.jpg"),
+            negY: await loadTexture("Digimonsavers_poster.jpg"),
+            posY: await loadTexture("digimon-feature.jpg"),
+            negZ: await loadTexture("Digimon_Frontier.jpg"),
+            posZ: await loadTexture("50.jpg")
         }));
 
     let startTime = new Date().getTime() / 1000;
@@ -151,13 +163,15 @@ async function loadTexture(fileName) {
     function draw() {
         let time = new Date().getTime() / 1000 - startTime;
 
-        mat4.perspective(projMatrix, Math.PI / 2, app.width / app.height, 0.1, 100.0);
-        let camPos = vec3.rotateY(vec3.create(), vec3.fromValues(0, 0.5, 2), vec3.fromValues(0, 0, 0), time * 0.05);
+        //mat4.perspective(projMatrix, Math.PI / 2, app.width / app.height, 0.1, 100.0);
+        mat4.perspective(projMatrix, Math.PI / 2, app.width / app.height, 5, 100.0);
+        //let camPos = vec3.rotateY(vec3.create(), vec3.fromValues(0, 0.5, 2), vec3.fromValues(0, 0, 0), time * 0.05);
+        let camPos = vec3.rotateY(vec3.create(), vec3.fromValues(0, 0.5, 2), vec3.fromValues(0, 0, 0), time * 0.9);
         mat4.lookAt(viewMatrix, camPos, vec3.fromValues(0, 0, 0), vec3.fromValues(0, 1, 0));
         mat4.multiply(viewProjMatrix, projMatrix, viewMatrix);
 
-        mat4.fromXRotation(rotateXMatrix, time * 0.1136);
-        mat4.fromZRotation(rotateYMatrix, time * 0.2235);
+        mat4.fromXRotation(rotateXMatrix, time * 0.5);
+        mat4.fromZRotation(rotateYMatrix, time * 0.5);
         mat4.multiply(modelMatrix, rotateXMatrix, rotateYMatrix);
 
         mat4.multiply(modelViewMatrix, viewMatrix, modelMatrix);
