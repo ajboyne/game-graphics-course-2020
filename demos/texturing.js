@@ -12,6 +12,7 @@
 
 import PicoGL from "../node_modules/picogl/build/module/picogl.js";
 import {mat4, vec3} from "../node_modules/gl-matrix/esm/index.js";
+//import OrbitalControls from "../node_modules/js.js";
 
 import {positions, normals, uvs, indices} from "../blender/cube.js"
 
@@ -144,18 +145,18 @@ async function loadTexture(fileName) {
 
     let skyboxDrawCall = app.createDrawCall(skyboxProgram, skyboxArray)
         .texture("cubemap", app.createCubemap({
-            negX: await loadTexture("stormydays_bk.png"),
-            posX: await loadTexture("stormydays_ft.png"),
-            negY: await loadTexture("stormydays_dn.png"),
-            posY: await loadTexture("stormydays_up.png"),
-            negZ: await loadTexture("stormydays_lf.png"),
-            posZ: await loadTexture("stormydays_rt.png")
-            //negX: await loadTexture("last-evolution.jpg"),
-            //posX: await loadTexture("Digimon-x.jpg"),
-            //negY: await loadTexture("Digimonsavers_poster.jpg"),
-            //posY: await loadTexture("digimon-feature.jpg"),
-            //negZ: await loadTexture("Digimon_Frontier.jpg"),
-            //posZ: await loadTexture("50d.jpg")
+            //negX: await loadTexture("stormydays_bk.png"),
+            //posX: await loadTexture("stormydays_ft.png"),
+            //negY: await loadTexture("stormydays_dn.png"),
+            //posY: await loadTexture("stormydays_up.png"),
+            //negZ: await loadTexture("stormydays_lf.png"),
+            //posZ: await loadTexture("stormydays_rt.png")
+            negX: await loadTexture("n_B.png"),
+            posX: await loadTexture("n_D.png"),
+            negY: await loadTexture("n_L.png"),
+            posY: await loadTexture("p_F.png"),
+            negZ: await loadTexture("p_R.png"),
+            posZ: await loadTexture("p_U.png")
         }));
 
     let startTime = new Date().getTime() / 1000;
@@ -164,10 +165,20 @@ async function loadTexture(fileName) {
     function draw() {
         let time = new Date().getTime() / 1000 - startTime;
 
+      //translate(mouseX, mouseY);
+      
+        // orbitalControl();
+
+       
+        //let camX = map(mouseX, 0, width, -200, 0);
+        //camera(camX, (height / 2) / tan(PI /6 ), 0, 0, 0, 0, 1, 0,);
+        
+        
+
         //mat4.perspective(projMatrix, Math.PI / 2, app.width / app.height, 0.1, 100.0);
         mat4.perspective(projMatrix, Math.PI / 2, app.width / app.height, 1.5, 100.0);
         //let camPos = vec3.rotateY(vec3.create(), vec3.fromValues(0, 0.5, 2), vec3.fromValues(0, 0, 0), time * 0.05);
-        let camPos = vec3.rotateY(vec3.create(), vec3.fromValues(0, 0.5, 2), vec3.fromValues(0, 0, 0), time * 5);
+        let camPos = vec3.rotateY(vec3.create(), vec3.fromValues(0, 0.5, 2), vec3.fromValues(0, 0, 0), time * 3);
         mat4.lookAt(viewMatrix, camPos, vec3.fromValues(0, 0, 0), vec3.fromValues(0, 1, 0));
         mat4.multiply(viewProjMatrix, projMatrix, viewMatrix);
 

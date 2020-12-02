@@ -53,7 +53,7 @@ const positions = new Float32Array([
     0.9, -0.5, 0.5,
     0.9, 0.5, 0.5,
     0.9, 0.5, -0.5,
-    09, -0.5, -0.5,
+    0.9, -0.5, -0.5,
 ]);
 
 const normals = new Float32Array([
@@ -175,10 +175,10 @@ let vertexShader = `
 // **             Application processing               **
 // ******************************************************
 
-let bgColor = vec4.fromValues(1.0, 0.2, 0.3, 1.0);
-let fgColor = vec4.fromValues(1.0, 0.9, 0.5, 1.0);
-//let bgColor = vec4.fromValues(Math.random(), Math.random(), Math.random(), Math.random());
-//let fgColor = vec4.fromValues(Math.random(), Math.random(), Math.random(), Math.random());
+//let bgColor = vec4.fromValues(1.0, 0.2, 0.3, 1.0);
+//let fgColor = vec4.fromValues(1.0, 0.9, 0.5, 1.0);
+let bgColor = vec4.fromValues(Math.random(), Math.random(), Math.random(), Math.random());
+let fgColor = vec4.fromValues(Math.random(), Math.random(), Math.random(), Math.random());
 
 app.clearColor(bgColor[0], bgColor[1], bgColor[2], bgColor[3])
     //.enable(PicoGL.DEPTH_TEST)
@@ -212,9 +212,9 @@ function draw() {
     let time = new Date().getTime() / 1000 - startTime;
 
     //mat4.perspective(projMatrix, Math.PI / 4, app.width / app.height, 0.1, 100.0);
-    mat4.perspective(projMatrix, Math.PI / 4, app.width / app.height, 10, 25); //null
-    //mat4.lookAt(viewMatrix, vec3.fromValues(3, 0, 2), vec3.fromValues(0, 0, 0), vec3.fromValues(0, 1, 0));
-    mat4.lookAt(viewMatrix, vec3.fromValues(13, 10, 12), vec3.fromValues(10, 10, 10), vec3.fromValues(10, 11, 10));
+    mat4.perspective(projMatrix, Math.PI / 4, app.width / app.height, 0.1, 25); //null
+    mat4.lookAt(viewMatrix, vec3.fromValues(3, 0, 2), vec3.fromValues(0, 0, 0), vec3.fromValues(0, 1, 0));
+    //mat4.lookAt(viewMatrix, vec3.fromValues(13, 10, 12), vec3.fromValues(10, 10, 10), vec3.fromValues(10, 11, 10));
     mat4.multiply(viewProjMatrix, projMatrix, viewMatrix);
 
     //mat4.fromXRotation(rotateXMatrix, time * 0.1136);
