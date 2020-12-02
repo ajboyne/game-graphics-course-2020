@@ -18,7 +18,7 @@ import {mat4, vec3, vec4} from "../node_modules/gl-matrix/esm/index.js";
 // **                       Data                       **
 // ******************************************************
 
-/*const positions = new Float32Array([
+const positions = new Float32Array([
     // front
     -0.5, 0.5, 0.9,
     0.5, 0.5, 0.9,
@@ -119,8 +119,8 @@ const indices = new Uint16Array([
     22, 21, 20,
     20, 23, 22,
 ]);
-*/
- import {positions, normals, indices} from "../blender/torus.js"
+
+ //import {positions, normals, indices} from "../blender/torus.js"
 
 
 // ******************************************************
@@ -175,10 +175,10 @@ let vertexShader = `
 // **             Application processing               **
 // ******************************************************
 
-//let bgColor = vec4.fromValues(1.0, 0.2, 0.3, 1.0);
-//let fgColor = vec4.fromValues(1.0, 0.9, 0.5, 1.0);
-let bgColor = vec4.fromValues(Math.random(), Math.random(), Math.random(), Math.random());
-let fgColor = vec4.fromValues(Math.random(), Math.random(), Math.random(), Math.random());
+let bgColor = vec4.fromValues(1.0, 0.2, 0.3, 1.0);
+let fgColor = vec4.fromValues(1.0, 0.9, 0.5, 1.0);
+//let bgColor = vec4.fromValues(Math.random(), Math.random(), Math.random(), Math.random());
+//let fgColor = vec4.fromValues(Math.random(), Math.random(), Math.random(), Math.random());
 
 app.clearColor(bgColor[0], bgColor[1], bgColor[2], bgColor[3])
     //.enable(PicoGL.DEPTH_TEST)
