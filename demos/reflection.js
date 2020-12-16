@@ -3,7 +3,7 @@
 import PicoGL from "../node_modules/picogl/build/module/picogl.js";
 import {mat4, vec3, mat3, vec4, vec2} from "../node_modules/gl-matrix/esm/index.js";
 
-import {positions, normals, indices} from "../blender/cube.js"
+import {positions, normals, indices} from "../blender/monkey.js"
 import {positions as mirrorPositions, uvs as mirrorUvs, indices as mirrorIndices} from "../blender/plane.js"
 
 let skyboxPositions = new Float32Array([
@@ -34,10 +34,11 @@ let fragmentShader = `
     void main()
     {        
         vec3 reflectedDir = reflect(viewDir, normalize(vNormal));
-        outColor = texture(cubemap, reflectedDir);
+        //outColor = texture(cubemap, reflectedDir);
         
         // Try using a higher mipmap LOD to get a rough material effect without any performance impact
         //outColor = textureLod(cubemap, reflectedDir, 7.0);
+        outColor = textureLod(cubemap, reflectedDir, 3.0);
     }
 `;
 
@@ -85,7 +86,9 @@ let mirrorFragmentShader = `
         vec2 screenPos = gl_FragCoord.xy / screenSize;
         
         // 0.03 is a mirror distortion factor, try making a larger distortion         
-        screenPos.x += (texture(distortionMap, vUv).r - 0.5) * 0.03;
+        //screenPos.x += (texture(distortionMap, vUv).r - 0.5) * 0.03;
+        //screenPos.x += (texture(distortionMap, vUv).r - 0.5) * 1;
+        screenPos.x += (texture(distortionMap, vUv).r + 1) * 0.5;
         outColor = texture(reflectionTex, screenPos);
     }
 `;

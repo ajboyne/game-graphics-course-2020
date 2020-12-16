@@ -7,12 +7,16 @@ import {positions, normals, indices} from "../blender/monkey.js"
 // **               Light configuration                **
 // ******************************************************
 
-let ambientLightColor = vec3.fromValues(0.05, 0.05, 0.1);
-let numberOfLights = 2;
-let lightColors = [vec3.fromValues(1.0, 0.0, 0.2), vec3.fromValues(0.0, 0.1, 0.2)];
-let lightInitialPositions = [vec3.fromValues(5, 0, 2), vec3.fromValues(-5, 0, 2)];
-let lightPositions = [vec3.create(), vec3.create()];
-
+//let ambientLightColor = vec3.fromValues(0.05, 0.05, 0.1);
+let ambientLightColor = vec3.fromValues(0.2, 0.35, 1);
+//let numberOfLights = 2;
+let numberOfLights = 4;
+//let lightColors = [vec3.fromValues(1.0, 0.0, 0.2), vec3.fromValues(0.0, 0.1, 0.2)];
+let lightColors = [vec3.fromValues(0.7, 1.0, 0.5), vec3.fromValues(0.5, 0.5, 0.5), vec3.fromValues(1.0, 1.0, 1.0), vec3.fromValues(0.9, 0.9, 0.9)];
+//let lightInitialPositions = [vec3.fromValues(5, 0, 2), vec3.fromValues(-5, 0, 2)];
+let lightInitialPositions = [vec3.fromValues(10, 10, 10), vec3.fromValues(-10, 6, 9), vec3.fromValues(7, 2, 6), vec3.fromValues(-2, 8, 1)];
+//let lightPositions = [vec3.create(), vec3.create()];
+let lightPositions = [vec3.create(), vec3.create(), vec3.create(), vec3.create()];
 
 // language=GLSL
 let lightCalculationShader = `
@@ -59,7 +63,7 @@ let fragmentShader = `
     void main() {                      
         // For Phong shading (per-fragment) move color calculation from vertex to fragment shader
         outColor = calculateLights(normalize(vNormal), vPosition);
-        // outColor = vColor;
+         outColor = vColor;
     }
 `;
 
@@ -85,7 +89,7 @@ let vertexShader = `
         vNormal = (modelMatrix * normal).xyz;
         
         // For Gouraud shading (per-vertex) move color calculation from fragment to vertex shader
-        //vColor = calculateLights(normalize(vNormal), vPosition);
+        vColor = calculateLights(normalize(vNormal), vPosition);
         
         gl_Position = viewProjectionMatrix * worldPosition;                        
     }
@@ -112,8 +116,8 @@ let drawCall = app.createDrawCall(program, vertexArray)
 
 let startTime = new Date().getTime() / 1000;
 
-let cameraPosition = vec3.fromValues(0, 0, 5);
-mat4.fromXRotation(modelMatrix, -Math.PI / 2);
+let cameraPosition = vec3.fromValues(5, 10, 5);
+mat4.fromXRotation(modelMatrix, -Math.PI / 1.5);
 
 const positionsBuffer = new Float32Array(numberOfLights * 3);
 const colorsBuffer = new Float32Array(numberOfLights * 3);

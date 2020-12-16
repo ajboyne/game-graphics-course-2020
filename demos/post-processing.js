@@ -96,25 +96,28 @@ let postFragmentShader = `
         float depth = texture(depthTex, v_position.xy).r;
         
         // Depth of field
-        col = depthOfField(col, depth, v_position.xy);
+        col =  depthOfField(col, -depth, v_position.xy);
 
         // Noise         
-        col.rgb += (1.0 - col.rgb) * random(v_position.xy) * 0.1;
+       // col.rgb += (1.0 - col.rgb) * random(v_position.xy) * 0.1;
+        col.rgb += (5.5 - col.rgb) * random(v_position.xy) * 0.1;
         
         // Contrast + Brightness
-        col = pow(col, vec4(1.5)) * 2.0;
+        //col = pow(col, vec4(1.5)) * 2.0;
+        col = pow(col, vec4(1.5)) * 5.05;
         
         // Color curves
-        col.rgb = col.rgb * vec3(1.2, 1.1, 1.0) + vec3(0.0, 0.05, 0.2);
+        //col.rgb = col.rgb * vec3(1.2, 1.1, 1.0) + vec3(0.0, 0.05, 0.2);
+        col.rgb = col.rgb * vec3(1.2, 1.1, 1.0) + vec3(0.5, 0.3, 0.7);
         
         // Ambient Occlusion
         //col = ambientOcclusion(col, depth, v_position.xy);                
         
         // Invert
-        //col.rgb = 1.0 - col.rgb;
+        col.rgb = 1.0 - col.rgb;
         
         // Fog
-        //col.rgb = col.rgb + vec3((depth - 0.992) * 200.0);         
+        col.rgb = col.rgb + vec3((depth - 0.992) * 200.0);         
                         
         outColor = col;
     }
