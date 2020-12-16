@@ -117,7 +117,8 @@ let postFragmentShader = `
         col.rgb = 1.0 - col.rgb;
         
         // Fog
-        col.rgb = col.rgb + vec3((depth - 0.992) * 200.0);         
+        //col.rgb = col.rgb + vec3((depth - 0.992) * 200.0);
+        col.rgb = col.rgb - vec3((depth - 0.992) * 100.0);         
                         
         outColor = col;
     }
